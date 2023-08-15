@@ -1,0 +1,24 @@
+.paginado {
+    display: flex;
+    justify-content: center; /* Para centrar la lista horizontalmente */
+    margin: 15px;
+  }
+  
+  .lista {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .number {
+    margin: 0;
+  }
+  
+  .numeros {
+    background-color: lightgray;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
