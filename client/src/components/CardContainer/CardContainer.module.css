@@ -1,4 +1,62 @@
 .cardsCont{
     display: flex;
+    flex-direction: column;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 200px;
+    height: 300px;
+    background-color: black;
+    margin: 10px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-decoration: none;
 }
+
+.flag{
+    height: 100%;
+    width: 90%;
+    margin-top: 5px;
+    
+}
+
+.flag img{
+    max-width: 100%; /* La imagen no será más ancha que su contenedor */
+    max-height: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+    
+}
+
+
+
+.name{
+    text-decoration: underline; /* Asegura que haya un subrayado */
+    text-decoration-color: black; /* Establece el color del subrayado */
+    text-decoration-style: solid; /* Asegura que el subrayado sea continuo */
+    color:  #f3f3f3 ;
+    
+}
+
+.info{
+    text-decoration: underline; /* Asegura que haya un subrayado */
+    text-decoration-color: black; /* Establece el color del subrayado */
+    text-decoration-style: solid; /* Asegura que el subrayado sea continuo */
+    color:  #f3f3f3 ;
+}
+
+.name:hover {
+    text-decoration-color: black; /* Mantén el mismo color en estado "hover" */
+  }
+  
+.name:visited {
+    text-decoration-color: black; /* Mantén el mismo color en estado "visited" */
+  }
+
+.info:hover {
+    text-decoration-color: black; /* Mantén el mismo color en estado "hover" */
+  }
+  
+.info:visited {
+    text-decoration-color: black; /* Mantén el mismo color en estado "visited" */
+  }

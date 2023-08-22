@@ -8,13 +8,13 @@ const CardsContainer = ({name, flag, continent, population}) => {
     return(
         <div className={style.cardsCont}>
             <div className={style.flag}>
-               <img src={flag} alt="Bandera"/>
+               <img className={style.img} src={flag} alt="Bandera"/>
            </div>
 
             <div>
                 <h3 className={style.name}>{name}</h3>
-                <p className={style.info}>Continent: {continent}</p>
-                <p className={style.info}>Population: {population}</p>
+                <p className={style.info}>Continent:  {continent}</p>
+                <p className={style.info}>Population:  {population}</p>
             </div>
         </div>
     )

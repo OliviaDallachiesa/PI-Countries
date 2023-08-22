@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import style from "./Create.module.css"
-import { createActivity } from "../../redux/actions";
+import { createActivity, getActivities } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import CardSelected from "../../components/CardSelected/CardSelected";
@@ -14,17 +14,29 @@ const Create = () => {
         difficulty: "",
         duration:"",
         season:"",
-        country: "",
-    })
-
-    const [select,setSelect] = useState({
-        season:'Summer',
         countries: [],
     })
 
-    const allCountries = useSelector(state => state.countriesForm)
+    const [select,setSelect] = useState({
+        countries: [],
+    })
 
+    const [error, setError] = useState({
+        name: "Required field",
+        difficulty: "Required field",
+        duration:"",
+        season:"Required field",
+    })
+
+    useEffect(() => {
+        dispatch(getActivities())
+    }, [])
+    const countries = useSelector(state => state.countriesForm) 
+    const allCountries = countries.slice().sort((a, b) => a.name.localeCompare(b.name));
+    const allActivities = useSelector(state => state.activities)
+    
     const handleChange = (event) => {
+
         setState({
             ...state,
             [event.target.name]: event.target.value
@@ -33,25 +45,65 @@ const Create = () => {
         validate({
             ...state,
             [event.target.name]: event.target.value }, event.target.name)
-    }
+            console.log(state)
+        }
+
 
     const handleSubmit = (event) => {
+        
         event.preventDefault()
-        dispatch(createActivity(state))
+        axios.post('http://localhost:3001/activities',{
+                "name":state.name,
+                "difficulty":state.difficulty,
+                "duration":state.duration,
+                "season": state.season,
+                "countries":select.countries
+                
+        })
+        dispatch(createActivity(state.name))
+        setState(state => {
+                    return{
+                        name:'',
+                        difficulty:'1',
+                        duration:'0',
+                        season:'',
+                    }
+                })
+        setSelect(state =>{
+                    return{
+                        countries:[]
+                    }
+                })
+                alert('Activity Loaded!')
+                
+    if(!select.countries.length) alert('Countries is required')
+                
+    
     }
 
-    const [error, setError] = useState({
-        name: "Required field",
-        difficulty: "Required field",
-        duration:"",
-        season:"Required field",
-        country: "Required field",
-    })
+console.log("countries", select.countries)
+
 
     const validate = (state, name) => {
+        console.log(state.name)
+        console.log(allActivities)
         if(name === "name"){
-            if(state.name !== "") setError({...error, name: ""}) 
-            else  setError({...error, name: "Required field"}) 
+        // if(state.name.length === 0) { setError({...error, name: "Required field"}) }
+
+        if(state.name !== ""){ 
+            setError({...error, name: ""})
+            let nameExists = allActivities.filter((act) => act.name && act.name.toLowerCase() === state.name.toLowerCase());
+            if (nameExists.length > 0) {setError({ ...error, name: "Name already exists" });}
+            else {setError({...error, name: ""})}
+        }
+        else if(state.name === "") {setError({...error, name: "Required field"})}
+
+            
+        //     if (!nameExists) {
+        //     setError({ ...error, name: "" });
+        //     } else  {
+        //     setError({ ...error, name: "Name already exists" });
+        // }
         }
 
         if(name === "difficulty"){
@@ -79,7 +131,6 @@ const Create = () => {
 
         }
     }
-
     const disable = () => {
         let disabled = true;
         for(let err in error){
@@ -91,10 +142,10 @@ const Create = () => {
     }
 
     const closeCountry = (countryName) => {
-        setSelect(prevState => {
+        setSelect(state => {
             return{
-                ...prevState,
-                countries:prevState.countries.filter(country => country !== countryName)
+                ...state,
+                countries:state.countries.filter(country => country !== countryName)
             }
         })
         console.log(select.countries)
@@ -102,21 +153,20 @@ const Create = () => {
 
     const handleSelectChange = (event) => {
         if(event.target.name ==='countries'){
-            if(!select[event.target.name].includes(event.target.value))setSelect(prevState=>{
+            if(!select[event.target.name].includes(event.target.value))setSelect(state=>{
                 return{
-                    ...prevState,
-                    [event.target.name]: [...prevState[event.target.name], event.target.value]
+                    ...state,
+                    [event.target.name]: [...state[event.target.name], event.target.value]
                 }
             })
         }else{
-            setSelect(prevState=>{
+            setSelect(state=>{
                 return{
-                    ...prevState,
+                    ...state,
                     [event.target.name]: event.target.value
                 }
             })
-        }
-        
+        }   
     }
 
     return(
@@ -162,8 +212,9 @@ const Create = () => {
                         select.countries.length?select.countries.map(c=><CardSelected name={c} onClose={closeCountry} />) : null
                     }
                 <select name='countries' onChange={handleSelectChange}>
+                <option value="" disabled selected hidden>Choose the countries</option>
                     {
-                        allCountries.map(c=><option value={c.name}>{c.name}</option>)
+                        allCountries.sort().map(c=><option value={c.name}>{c.name}</option>)
                     }
                 </select>
                     

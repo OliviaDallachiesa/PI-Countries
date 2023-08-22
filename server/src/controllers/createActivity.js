@@ -16,8 +16,11 @@ const createActivity = async (name, difficulty, duration, season, countries) => 
 
     // await al modelo Country para buscar el nombre del país y agregarselo
     const country = await Country.findAll({ where: { name: countries } });
-    console.log(country[0].dataValues.id)
-    await newAct.addCountry(country[0].dataValues.id);
+    console.log(country)
+
+    country.forEach(async (country) => {
+        await newAct.addCountry(country.dataValues.id);
+    });
     
     return newAct
 }

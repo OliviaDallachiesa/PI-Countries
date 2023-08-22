@@ -41,11 +41,11 @@ const NavBar = ( ) => {
             <div className={style.mundi}><Link to="/">🌎</Link></div>
             <div className={style.buttons}>
                 <button className={style.home}>
-                    <Link to="/home" className={style.sinSubrayado}>HOME 🌎</Link>
+                    <Link to="/home" className={style.sinSubrayado}> HOME </Link>
                 </button>
 
                 <button className={style.create}>
-                    <Link to="/create" className={style.sinSubrayado}>CREATE AN ACTIVITY</Link>
+                    <Link to="/create" className={style.sinSubrayado}> CREATE AN ACTIVITY </Link>
                 </button>
             </div>
             

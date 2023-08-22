@@ -7,7 +7,7 @@ const getAllCountries = async () => {
             through: 'Country_Activity',
         }]
     })
-    
+    console.log(dbCountries)
     const mapCountry = dbCountries.map(country => ({
         id: country.id,
         name: country.name,
@@ -17,6 +17,7 @@ const getAllCountries = async () => {
         subregion: country.subregion,
         area: country.area,
         population: country.population,
+        activities: country.Activities.map(act => act.name)
     }))
     return mapCountry
 }

@@ -1,10 +1,12 @@
-import { GET_ALL_COUNTRIES, CREATE_ACTIVITY, ORDER, FILTER_BY_CONTINENT, GET_COUNTRY_BY_NAME } from "./action-types";
+import { GET_ALL_COUNTRIES, CREATE_ACTIVITY, ORDER, FILTER_BY_CONTINENT, GET_COUNTRY_BY_NAME, GET_ACTIVITIES, GET_DETAIL, CLEAN_DETAILS, FILTER_BY_ACTIVITY } from "./action-types";
 
 let initialState = {
     countries: [],
     activities: [],
     countriesCopy: [],
-    countriesForm: []
+    countriesForm: [],
+    details: [],
+    
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -17,7 +19,16 @@ const rootReducer = (state = initialState, action) => {
                 countriesCopy: action.payload,
                 countriesForm: action.payload
             };
-
+        
+        case GET_ACTIVITIES: 
+        
+        
+        return {
+            ...state,
+            activities: action.payload ,
+         
+        }
+        
         case GET_COUNTRY_BY_NAME:
             return {
                 ...state,
@@ -25,8 +36,23 @@ const rootReducer = (state = initialState, action) => {
             }
         
         case CREATE_ACTIVITY:
-            return { ...state, 
-                activities: [...state.activities, action.payload ]}
+            return { 
+                ...state,
+                activities:[...state.activities,action.payload]
+            }
+
+        case GET_DETAIL:
+            return {
+                ...state,
+                details:[action.payload]
+            }
+
+        case CLEAN_DETAILS:
+            return{
+                ...state,
+                details:[]
+            }
+
 
         // case PAGINATE:
         //     const nextPage = state.currentPage + 1
@@ -92,6 +118,12 @@ const rootReducer = (state = initialState, action) => {
                     countries:action.payload==='All'? state.countries : state.countriesCopy.filter(c=>c.continent === action.payload)
                 }
             }
+
+            case FILTER_BY_ACTIVITY: 
+                return{
+                    ...state,
+                    countries:action.payload==='All'? state.countries : state.countriesCopy.filter(c=>c.activities.includes(action.payload))
+                }
             // case FILTER:
             // if(action.payload == "Europe"){
             //     const countriesFilter = [...state.countriesCopy].filter((country)=>  country.continent === "Europe") 

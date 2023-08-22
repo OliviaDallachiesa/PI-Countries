@@ -9,12 +9,15 @@
     left: 0%;
     width: 100%;
     height: 50px;
-    
+    text-decoration: none;
     
 }
 
 .mundi{
   font-size: 30px;
+  text-decoration: none;
+  border: none;
+  
 }
 
 .mundi:hover {
@@ -26,11 +29,11 @@
     margin-top: 0px;
     width: 280px;
     --input-line: #222222a8;
-    --input-text-color: #808080;
+    --input-text-color: #5e5b5b;
     --input-text-hover-color: transparent;
     --input-border-color: #808080;
     --input-border-hover-color: #999999;
-    --input-bg-color: #d1d1d1;
+    --input-bg-color: #f3f3f3;
     --search-max-width: 350px;
     --search-min-width: 150px;
     --border-radius: 5px;
@@ -65,11 +68,12 @@
   height: 100%;
   border: 0;
   border-color: transparent;
-  font-size: 1rem;
+  font-size: 18px;
   padding-right: 0px;
   color: var(--input-line);
   background: var(--input-bg-color);
   outline: none;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .bar::-webkit-input-placeholder {
